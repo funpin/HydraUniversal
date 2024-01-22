@@ -1,0 +1,243 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Hydra Lite Wi-Fi</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="/function.js"></script>
+</head>
+<body onload="load();">
+<center>
+<table cellpadding=0 cellspacing=0 id=wrap><tr><td align=center id=wraptd>
+<table cellpadding=10% class=table1>
+<tr valign=middle>
+<th colspan="2" valign="middle">
+<h1 class="adaptiveH1">Прибор &laquoHydra Lite&raquo </h1>
+</th>
+<tr bgcolor=#A0CFEC>
+<td width=120% valign="middle" align="center" bgcolor=#368BC1>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center" valign="middle">
+<table class="tblSetup" align="center">
+    <tr>
+        <td>
+          <div class=adaptiveTEXT>
+            <div>
+                                           Подключение Wi-fi 
+              </div>
+              <BR>
+              <div>
+              <input id="signalStrength1" value="{{signalStrength1}}" class="controlSetup" placeholder="dBm"  size=4>
+              <input id="ssidName1" value="{{ssidName1}}" class="controlSetup" placeholder="Имя WiFi сети" >
+              <input class="input input--with-active" id="ssidPassword1" value="{{ssidPassword1}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+			  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              <input class="controlSetup" value="Сохранить" onclick="set_ssid(this, '1');" type="submit">
+              </div>
+              <div>
+              <input id="signalStrength2" value="{{signalStrength2}}" class="controlSetup" placeholder="dBm"  size=4>
+              <input id="ssidName2" value="{{ssidName2}}" class="controlSetup"  placeholder="Имя WiFi сети">
+              <input class="input input--with-active" id="ssidPassword2" value="{{ssidPassword2}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+			  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              <input class="controlSetup" value="Сохранить" onclick="set_ssid(this, '2');" type="submit">
+            </div>
+              <div>
+              <input id="signalStrength3" value="{{signalStrength3}}" class="controlSetup"  placeholder="dBm"  size=4>
+              <input id="ssidName3" value="{{ssidName3}}" class="controlSetup" placeholder="Имя WiFi сети">
+              <input class="input input--with-active" id="ssidPassword3" value="{{ssidPassword3}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+			  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              <input class="controlSetup" value="Сохранить" onclick="set_ssid(this, '3');" type="submit">
+            </div>
+              <div>
+              <input id="signalStrength4" value="{{signalStrength4}}" class="controlSetup" placeholder="dBm"  size=4>
+              <input id="ssidName4" value="{{ssidName4}}" class="controlSetup" placeholder="Имя WiFi сети">
+              <input class="input input--with-active" id="ssidPassword4" value="{{ssidPassword4}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+			  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              <input class="controlSetup" value="Сохранить" onclick="set_ssid(this, '4');" type="submit">
+            </div>
+             <div>
+              <input id="signalStrength5" value="{{signalStrength5}}" class="controlSetup" placeholder="dBm"  size=4>
+              <input id="ssidName5" value="{{ssidName5}}" class="controlSetup"  placeholder="Имя WiFi сети">
+              <input class="input input--with-active" id="ssidPassword5" value="{{ssidPassword5}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+			  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              <input class="controlSetup" value="Сохранить" onclick="set_ssid(this, '5');" type="submit">
+            </div>
+               <div>
+              <input id="signalStrength6" value="{{signalStrength6}}" class="controlSetup"  placeholder="dBm"  size=4>
+              <input id="ssidName6" placeholder="Имя WiFi сети" value="{{ssidName6}}" class="controlSetup">
+              <input class="input input--with-active" id="ssidPassword6" value="{{ssidPassword6}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+			  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              <input class="controlSetup" value="Сохранить" onclick="set_ssid(this, '6');" type="submit">
+            </div>
+              <div>
+              <input id="signalStrength7" value="{{signalStrength7}}" class="controlSetup"  placeholder="dBm"  size=4>
+              <input id="ssidName7" value="{{ssidName7}}" class="controlSetup"  placeholder="Имя WiFi сети">
+              <input class="input input--with-active" id="ssidPassword7" value="{{ssidPassword7}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+			  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              <input class="controlSetup" value="Сохранить" onclick="set_ssid(this, '7');" type="submit">
+            </div>
+            <BR><div>
+                   <input class="controlSetup" value="Перезагрузить устройство" onclick="restart(this,'Вы действительно хотите перезагрузить устройство?');" type="submit">
+            </div>
+             <BR><div>
+             Можно сохранить wi-fi сетей:
+                   <input id="count_wf" value="{{count_wf}}" class="controlSetup"  placeholder="count"  size=4>    из 20.
+            </div>
+            <BR>
+              <div>
+                  <input id="saveSsidName1" value="{{savessidName1}}" class="controlSetup" placeholder="Имя WiFi сети" >
+                  <input class="input input--with-active" id="savessidPassword1" value="{{savessidPassword1}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+                  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              </div>
+              <div>
+                  <input id="saveSsidName1" value="{{savessidName2}}" class="controlSetup" placeholder="Имя WiFi сети" >
+                  <input class="input input--with-active" id="savessidPassword2" value="{{savessidPassword2}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+                  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              </div>
+              <div>
+                  <input id="saveSsidName1" value="{{savessidName3}}" class="controlSetup" placeholder="Имя WiFi сети" >
+                  <input class="input input--with-active" id="savessidPassword3" value="{{savessidPassword3}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+                  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              </div>
+              <div>
+                  <input id="saveSsidName1" value="{{savessidName4}}" class="controlSetup" placeholder="Имя WiFi сети" >
+                  <input class="input input--with-active" id="savessidPassword4" value="{{savessidPassword4}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+                  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              </div>
+              <div>
+                  <input id="saveSsidName1" value="{{savessidName5}}" class="controlSetup" placeholder="Имя WiFi сети" >
+                  <input class="input input--with-active" id="savessidPassword5" value="{{savessidPassword5}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+                  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              </div>
+              <div>
+                  <input id="saveSsidName1" value="{{savessidName6}}" class="controlSetup" placeholder="Имя WiFi сети" >
+                  <input class="input input--with-active" id="savessidPassword6" value="{{savessidPassword6}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+                  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              </div>
+              <div>
+                  <input id="saveSsidName1" value="{{savessidName7}}" class="controlSetup" placeholder="Имя WiFi сети" >
+                  <input class="input input--with-active" id="savessidPassword7" value="{{savessidPassword7}}" pattern=".{8,15}" type="password" class="controlSetup" placeholder="Пароль">
+                  <input id="checkbox" type="checkbox" name="checkbox1" value="1"  class="button-indication button-indication--visibility-off" onclick="passwordVisibility(this)"/>
+              </div>
+            <BR>
+              <div>
+                   <input class="controlSetup" value="Очистить сохраненные сети" onclick="delete_config(this);" type="submit">
+             </div>             
+           </div>
+          </div>
+        </td>
+    </tr>   
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="2" >
+
+<hr width=100% valign="middle" align="center" color=#15317E>
+
+<p class="adaptiveTEXT" valign="middle" align="center">Мытищинский филиал МГТУ имени Н.Э.Баумана
+<p class="adaptiveTEXT" valign="middle" align="center"> Кафедра К3
+
+
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</center>
+<script type="text/javascript">
+
+  var xmlHttp=createXmlHttpObject();
+
+  function createXmlHttpObject()
+  {
+    if(window.XMLHttpRequest){
+      xmlHttp=new XMLHttpRequest();
+    }else{
+      xmlHttp=new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    return xmlHttp;
+  }
+
+function delete_config(submit)
+  {
+    server = "/delete";
+    send_request(submit,server);
+    alert("Запрос на очистку отправлен.");
+  }
+
+function set_ssid(submit, number) {
+    server = "/ssid?ssid="+val('ssidName' + number)+"&password="+encodeURIComponent(val('ssidPassword' + number));
+    send_request(submit,server);
+    alert("Изменения вступят в силу после перезагрузки. Пожалуйста, перезагрузите устройство.");
+  }
+
+  function restart(submit,texts)
+  {
+    if (confirm(texts)) {
+      server = "/restart?device=ok";
+      send_request(submit,server);
+      return true;
+  } else 
+    {
+      return false;
+    }
+  }
+///////////////////////////////////////////////////////////////
+function passwordVisibility(e) {
+	    let that = e.parentElement.querySelector('.input'),
+		    btn = e.parentElement.querySelector('.button-indication');
+
+	    if(that.type === 'password'){
+	    	that.type = 'text';
+	    	btn.classList.toggle('button-indication--visibility-off');
+	    	btn.classList.toggle('button-indication--visibility');
+	    }
+	    else{
+	    	that.type = 'password';
+	    	btn.classList.toggle('button-indication--visibility-off');
+	    	btn.classList.toggle('button-indication--visibility');
+	    }
+	}
+
+//////////////////////////////////////////////////////////////////////////////////////////////  
+ 
+  
+  function send_request(submit,server){
+    request = new XMLHttpRequest();
+    request.open("GET", server, true);
+    request.send();
+    save_status(submit,request);
+  }
+  
+  function val(id){
+    var v = document.getElementById(id).value;
+    return v;
+  }
+  
+  function save_status(submit,request){
+    old_submit = submit.value;
+    request.onreadystatechange = function() {
+      if (request.readyState != 4) return;
+      submit.value = request.responseText;
+      setTimeout(function(){
+        submit.value=old_submit;
+        submit_disabled(false);
+      }, 1000);
+    }
+    submit.value = 'Подождите...';
+    submit_disabled(true);
+  }
+  
+  function submit_disabled(request){
+    var inputs = document.getElementsByTagName("input");
+    for (var i = 0; i < inputs.length; i++) {
+    if (inputs[i].type === 'submit') {inputs[i].disabled = request;}
+    }
+  }
+
+</script>
+</body>
+</html>
