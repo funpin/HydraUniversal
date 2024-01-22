@@ -29,9 +29,6 @@ LiquidCrystal_I2C lcd(0x1, 16, 2);    // Объект LCD
 size_t indexAppendSsid = 0;
 File fsUploadFile;
 
-aREST rest = aREST();
-Adafruit_BME280 bme;                  // Датчик
-
 unsigned long oldmillis=PERIOD+PERIOD;//затравочное ("неправильное") значение
 unsigned long when = millis();        //Таймер для отправки в БД
 unsigned long mainDisplayTimer;       //Таймер для отображения инф. с датчика (осн.) на дисплее
@@ -70,6 +67,9 @@ String passwordAP = "";               // Пароль точки доступа
 
 const char* _ssid[wf_configs] ={};
 const char* _password[wf_configs] ={};
+
+aREST rest = aREST();
+Adafruit_BME280 bme;                  // Датчик
 
 // Код буквы Ф для LCD экрана (1)
 PROGMEM uint8_t rus_F[] = {
@@ -296,6 +296,38 @@ void setup()
   LoadConfig(); 
   delay(1000);
 
+  oled.setCursor(0, 3);  // курсор в 0,4
+  oled.print("BME init...                ");
+  if (!bme.begin(BME280_ADDRESS)) 
+  {
+    switch (typeDevice) {
+      case 0: // OLED
+      {
+        oled.setCursor(0, 3);  // курсор в 0,4
+        oled.print(F("BME Error  ")); //если датчик не найден - выводим ошибку и номер входа мультиплексора, к которому подключен неисправный датчик
+        while (1);
+        break;
+      }
+        case 1:
+        case 2: // LCD
+      {
+        lcd.setCursor(0,1);
+        lcd.print("BME Error  ");
+        while (1);
+        break;
+      }
+      default:
+        Serial.println("Display definition error (main setup)");
+        break;
+      }
+   }
+  bme.setSampling(Adafruit_BME280::MODE_NORMAL,     //режим работы датчика bme280
+                  Adafruit_BME280::SAMPLING_X2,     //точность изм. температуры  
+                  Adafruit_BME280::SAMPLING_X16,    //точность изм. давления 
+                  Adafruit_BME280::SAMPLING_X2,     //точность изм. влажности 
+                  Adafruit_BME280::FILTER_X16,      //уровень фильтрации
+                  Adafruit_BME280::STANDBY_MS_0_5); //период просыпания, мСек
+
   for(size_t i = 0; i < wf_configs; i++) {
       if (ssid[i] != "") 
       {
@@ -311,43 +343,35 @@ void setup()
      wifiMulti.addAP(_ssid[i],_password[i]);
   }
 
-  ReinitWiFi(0);
-  delay(10);
-
   switch (typeDevice) {
     case 0: // OLED
     {
-      oled.setCursor(0, 4);  // курсор в 0,4
-      oled.print("BME280 init...                ");
+      oled.setCursor(0, 3);  // курсор в 0,4
+      oled.print("Wi-Fi init...                ");
       break;
     }
     case 1: // 
     case 2: // LCD 
     {
       lcd.setCursor(0,1);
-      lcd.print("BME280 init...                ");
+      lcd.print("Wi-Fi init...                ");
       break;
     }
     default:
     {
-      Serial.println("Display definition error (main setup)");
+      Serial.println("Display definition error (wifi Reinit)");
       break;
     }
   }
-                                      //Инициаоизируем BME
-  bme.setSampling(Adafruit_BME280::MODE_NORMAL,     //режим работы датчика bme280
-                  Adafruit_BME280::SAMPLING_X2,     //точность изм. температуры  
-                  Adafruit_BME280::SAMPLING_X16,    //точность изм. давления 
-                  Adafruit_BME280::SAMPLING_X2,     //точность изм. влажности 
-                  Adafruit_BME280::FILTER_X16,      //уровень фильтрации
-                  Adafruit_BME280::STANDBY_MS_0_5); //период просыпания, мСек
 
+  mainDisplayTimer = millis();
+  dispayShowType = 0;
+  ReinitWiFi(0);
+  delay(500);
+  
   switch (typeDevice) {
     case 0: // OLED
     {
-      oled.clear();
-      oled64.init();
-      oled64.drawBitmap(0, 0, img_bitmap, 128, 64, BITMAP_NORMAL, BUF_ADD);
       break;
     }
     case 1: // 
@@ -359,8 +383,7 @@ void setup()
       lcd.createChar(4, rus_U);
       lcd.clear();
       lcd.setCursor(0,0);
-      // 000КАФЕДРА К3000
-      // 00000МФ МГТУ0000
+      // КАФЕДРА К3 МФ МГТУ
       lcd.print("   KA"); lcd.print(char(1)); lcd.print("E"); lcd.print(char(2)); lcd.print("PA K3");
       lcd.setCursor(0,1);
       lcd.print("     M"); lcd.print(char(1)); lcd.print("M"); lcd.print(char(3)); lcd.print("T"); lcd.print(char(4));
@@ -372,8 +395,7 @@ void setup()
       break;
     }
   }
-  dispayShowType = 0;
-  mainDisplayTimer = millis();
+  delay(3000);
 }
 
 void loop() 
@@ -457,38 +479,37 @@ void loop()
       break;
     }
 
+  if (!bme.begin(BME280_ADDRESS)) 
+  {
+    switch (typeDevice) {
+      case 0: // OLED
+      {
+        oled.setCursor(0, 3);  // курсор в 0,4
+        oled.print(F("BME Error  ")); //если датчик не найден - выводим ошибку и номер входа мультиплексора, к которому подключен неисправный датчик
+        while (1);
+        break;
+      }
+        case 1:
+        case 2: // LCD
+      {
+        lcd.setCursor(0,1);
+        lcd.print("BME Error  ");
+        while (1);
+        break;
+      }
+      default:
+        Serial.println("Display definition error (main loop)");
+        break;
+      }
+  }
+
   pressure=0;                         // атмосферное давление
   temp=0;                             // температура
   hum=0;                              // влажность
-  
-    if (!bme.begin(BME280_ADDRESS)) 
-      {
-        switch (typeDevice) {
-          case 0: // OLED
-          {
-            oled.clear();
-            oled.print(F("BME Error  ")); //если датчик не найден - выводим ошибку и номер входа мультиплексора, к которому подключен неисправный датчик
-            while (1);
-            break;
-          }
-            case 1:
-            case 2: // LCD
-          {
-            lcd.clear();
-            lcd.setCursor(0,0);
-            lcd.print(F("BME Error  "));
-            while (1);
-            break;
-          }
-          default:
-            Serial.println("Display definition error (main loop)");
-            break;
-          }
-       }
       
-    pressure=bme.readPressure()/mmHg; //сумма значений атмосферного давления 
-    temp=bme.readTemperature();       //сумма значений температуры
-    hum=bme.readHumidity();           //сумма значений влажности
+  pressure=bme.readPressure()/mmHg; //сумма значений атмосферного давления 
+  temp=bme.readTemperature();       //сумма значений температуры
+  hum=bme.readHumidity();           //сумма значений влажности
 
   //передача пакета данных json раз в минуту в базу данных вуза
   //вывод на жисплей и SerialPort название точки доступа, к которой удалось подключиться и ip-адреса раз в минуту

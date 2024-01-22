@@ -4,7 +4,7 @@ void SSDP_init(void)
   switch (typeDevice) {
     case 0: // OLED
     {
-      oled.setCursor(0, 4);  // курсор в 0,4
+      oled.setCursor(0, 3);  // курсор в 0,4
       oled.print("SSDP init...                ");
       break;
     }
@@ -36,7 +36,7 @@ void HTTP_init(void)
     switch (typeDevice) {
     case 0: // OLED
     {
-      oled.setCursor(0, 4);  // курсор в 0,4
+      oled.setCursor(0, 3);  // курсор в 0,4
       oled.print("HTTP init...                ");
       break;
     }
@@ -143,7 +143,7 @@ void AREST_init(void)
     switch (typeDevice) {
     case 0: // OLED
     {
-      oled.setCursor(0, 4);  // курсор в 0,4
+      oled.setCursor(0, 3);  // курсор в 0,4
       oled.print("AREST init...                ");
       break;
     }

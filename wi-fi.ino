@@ -1,11 +1,11 @@
 //(Пере)инициализировать WiFi
 void ReinitWiFi(int n)           
-{
+{  
   if(n==1 && (wifiMulti.run() == WL_CONNECTED))
   {
     // всё в порядке
     Serial.print("OK");
-    //return;
+    return;
   }
 
   if (n==0 && (wifiMulti.run() != WL_CONNECTED))
@@ -25,6 +25,7 @@ void ReinitWiFi(int n)
 
   switch (typeDevice) {
     case 0: // OLED
+      oled.init();
       oled.clear();
       oled.home();
       oled.print("      Hydra Lite   "); 
@@ -65,7 +66,28 @@ void ReinitWiFi(int n)
       }
     } else
       {
-        Serial.println(F(" Connecting"));
+        Serial.println(F(" Connected"));
+
+        switch (typeDevice) {
+          case 0: // OLED
+          {
+            oled.setCursor(0, 3);  // курсор в 0,4
+            oled.print("Connected!                ");
+            break;
+          }
+          case 1: // 
+          case 2: // LCD 
+          {
+            lcd.setCursor(0,1);
+            lcd.print("Connected!                 ");
+            break;
+          }
+          default:
+          {
+            Serial.println("Display definition error (wifi Reinit)");
+            break;
+          }
+        }
         myIP=WiFi.localIP();
         mySSID=WiFi.SSID();
         myAP="STA"; 
@@ -89,14 +111,14 @@ void ReinitWiFi(int n)
     mySSID=ssidAP;
     myAP="AP";
   }
-  wifiDisplayTimer = millis();
-  dispayShowType = 1;
-  lcd_v();
   // Перезапускаем сервер
   SERVERaREST.begin();
   //сканирование сетей (происходит уже после попытки подлкючения)
   scan();
   delay(1000);
+  wifiDisplayTimer = millis(); 
+  dispayShowType = 1;
+  lcd_v();
 }
 
 //вывод на lcd-экран и в монитор порта название точки доступа, к которой удалось подключиться и ip-адреса
@@ -147,9 +169,6 @@ void lcd_v2()  //2 стр. (часть информации)
   switch (typeDevice) {
     case 0: // OLED
     {
-      oled.clear();
-      oled64.init();
-      oled64.drawBitmap(0, 0, img_bitmap, 128, 64, BITMAP_NORMAL, BUF_ADD);
       break;
     }
     case 1: 
@@ -174,6 +193,9 @@ void lcd_v3() //3 стр. (часть информации)
   switch (typeDevice) {
     case 0: // OLED
     {
+      oled.clear();
+      oled64.init();
+      oled64.drawBitmap(0, 0, img_bitmap, 128, 64, BITMAP_NORMAL, BUF_ADD);
       break;
     }
     case 1: 

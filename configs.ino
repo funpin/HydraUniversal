@@ -4,7 +4,7 @@ bool LoadConfig()
   switch (typeDevice) {
     case 0: // OLED
     {
-      oled.setCursor(0, 4);  // курсор в 0,4
+      oled.setCursor(0, 3);  // курсор в 0,4
       oled.print("Load Config...                ");
       break;
     }
