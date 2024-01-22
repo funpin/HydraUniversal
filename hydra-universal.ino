@@ -7,7 +7,7 @@
 #include <WiFiManager.h>         
 #include <ESP8266SSDP.h>
 #include <aREST.h>
-#include <FS.h>
+#include <FS.h>                       // Библиотека для SPIFFS
 #include <ArduinoJson.h>              // Библиотека для обработки данных
 #include <ESP8266WiFiMulti.h>         // Библиотека для работы с множеством точек досутпа
 #include <GyverOLED.h>                // Библиотека для OLED экрана
@@ -237,7 +237,7 @@ void setup()
         lcd.clear();
         lcd.setCursor(0,0);
         lcd.print("LCD detect:");
-        lcd.setCursor(13,0);
+        lcd.setCursor(12,0);
         lcd.print("0x27");
         break;
       }
@@ -250,7 +250,7 @@ void setup()
         lcd.clear();
         lcd.setCursor(0,0);
         lcd.print("LCD detect:");
-        lcd.setCursor(13,0);
+        lcd.setCursor(12,0);
         lcd.print("0x?");             // Внести адрес 0x? для 2го случая
         break;
       }
@@ -260,13 +260,101 @@ void setup()
         break;
       }
     }
+    switch (typeDevice) {
+    case 0: // OLED
+    {
+      oled.setCursor(0, 3);  // курсор в 0,4
+      oled.print("Starting...                ");
+      break;
+    }
+    case 1: // 
+    case 2: // LCD 
+    {
+      lcd.setCursor(0,1);
+      lcd.print("Starting...                ");
+      break;
+    }
+    default:
+    {
+      Serial.println("Display definition error (main setup)");
+      break;
+    }
+  }
+  delay(2000);
 
-  SPIFFS.begin();
+  switch (typeDevice) {
+    case 0: // OLED
+    {
+      oled.setCursor(0, 3);  // курсор в 0,4
+      oled.print("SPIFFS init...                ");
+      break;
+    }
+    case 1: // 
+    case 2: // LCD 
+    {
+      lcd.setCursor(0,1);
+      lcd.print("SPIFFS init...                ");
+      break;
+    }
+    default:
+    {
+      Serial.println("Display definition error (main setup)");
+      break;
+    }
+  }
+  if (!SPIFFS.begin()) {
+    Serial.println("Error: No SPIFFS");
+    switch (typeDevice) {
+      case 0: // OLED
+      {
+        oled.setCursor(0, 3);  // курсор в 0,4
+        oled.print("SPIFFS error                   ");
+        break;
+      }
+      case 1: // 
+      case 2: // LCD 
+      {
+        lcd.setCursor(0,1);
+        lcd.print("SPIFFS error                   ");
+        break;
+      }
+      default:
+      {
+        Serial.println("Display definition error (main setup)");
+        break;
+      }
+    } 
+    return;
+  }
 
   File f = SPIFFS.open("/f_config.txt", "r");
   if (!f)
   {
-    Serial.print("Error:file");
+    Serial.print("Error: file does not exist");
+
+    switch (typeDevice) {
+      case 0: // OLED
+      {
+        oled.setCursor(0, 3);  // курсор в 0,4
+        oled.print("SPIFFS file err                ");
+        delay(2000);
+        break;
+      }
+      case 1: // 
+      case 2: // LCD 
+      {
+        lcd.setCursor(0,1);
+        lcd.print("SPIFFS file err                ");
+        delay(2000);
+        break;
+      }
+      default:
+      {
+        Serial.println("Display definition error (main setup)");
+        break;
+      }
+    }
+    
     return;
   }
   else 
