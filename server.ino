@@ -1,6 +1,26 @@
 //функции для создания веб-страницы
 void SSDP_init(void) 
 {
+  switch (typeDevice) {
+    case 0: // OLED
+    {
+      oled.setCursor(0, 4);  // курсор в 0,4
+      oled.print("SSDP init...                ");
+      break;
+    }
+    case 1: // 
+    case 2: // LCD 
+    {
+      lcd.setCursor(0,1);
+      lcd.print("SSDP init...                ");
+      break;
+    }
+    default:
+    {
+      Serial.println("Display definition error (server ssdp)");
+      break;
+    }
+  }
   SSDP.setSchemaURL("description.xml");
   SSDP.setHTTPPort(80);
   SSDP.setName("FSWebServer");
@@ -13,6 +33,26 @@ void SSDP_init(void)
 
 void HTTP_init(void) 
 {
+    switch (typeDevice) {
+    case 0: // OLED
+    {
+      oled.setCursor(0, 4);  // курсор в 0,4
+      oled.print("HTTP init...                ");
+      break;
+    }
+    case 1: // 
+    case 2: // LCD 
+    {
+      lcd.setCursor(0,1);
+      lcd.print("HTTP init...                ");
+      break;
+    }
+    default:
+    {
+      Serial.println("Display definition error (server http)");
+      break;
+    }
+  }
   //SSDP дескриптор
   HTTP.on("/description.xml", HTTP_GET, []() 
   {
@@ -100,6 +140,26 @@ void HTTP_init(void)
 
 void AREST_init(void) 
 {
+    switch (typeDevice) {
+    case 0: // OLED
+    {
+      oled.setCursor(0, 4);  // курсор в 0,4
+      oled.print("AREST init...                ");
+      break;
+    }
+    case 1: // 
+    case 2: // LCD 
+    {
+      lcd.setCursor(0,1);
+      lcd.print("AREST init...                ");
+      break;
+    }
+    default:
+    {
+      Serial.println("Display definition error (server AREST)");
+      break;
+    }
+  }
   // Определяем имя name и ИД ID устройства aREST
   rest.set_id("1");
   char* aRest = new char[strlen("aRest") + 1];

@@ -1,6 +1,26 @@
 //загрузка данных сохраненных в файл  configs.json
 bool LoadConfig() 
 {
+  switch (typeDevice) {
+    case 0: // OLED
+    {
+      oled.setCursor(0, 4);  // курсор в 0,4
+      oled.print("Load Config...                ");
+      break;
+    }
+    case 1: // 
+    case 2: // LCD 
+    {
+      lcd.setCursor(0,1);
+      lcd.print("Load Config...                ");
+      break;
+    }
+    default:
+    {
+      Serial.println("Display definition error (server ssdp)");
+      break;
+    }
+  }
   //открываем файл для чтения
   File configFile = SPIFFS.open("/configs.json", "r");
   if (!configFile) 

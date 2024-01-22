@@ -23,7 +23,6 @@ void ReinitWiFi(int n)
   //попытаться войти в связь (адреса, пароли, явки заданы ранее)
   WiFi.mode(WIFI_STA);
 
-  lcd.setCursor(0,0);
   switch (typeDevice) {
     case 0: // OLED
       oled.clear();
@@ -40,7 +39,7 @@ void ReinitWiFi(int n)
       lcd.setCursor(0,1);
       break;
     default:
-      Serial.println("Display definition error (wi-fi)");
+      Serial.println("Display definition error (wi-fi reinit)");
       break;
   }
 
@@ -50,7 +49,7 @@ void ReinitWiFi(int n)
     {
       delay(300);
       Serial.print(F("*"));
-      
+
       switch (typeDevice) {
         case 0: // OLED
           oled.print(F("*"));
@@ -61,7 +60,7 @@ void ReinitWiFi(int n)
           lcd.print("*");
           break;
         default:
-          Serial.println("Display definition error (wi-fi loop)");
+          Serial.println("Display definition error (wi-fi)");
           break;
       }
     } else
@@ -90,6 +89,8 @@ void ReinitWiFi(int n)
     mySSID=ssidAP;
     myAP="AP";
   }
+  wifiDisplayTimer = millis();
+  dispayShowType = 1;
   lcd_v();
   // Перезапускаем сервер
   SERVERaREST.begin();
@@ -99,7 +100,7 @@ void ReinitWiFi(int n)
 }
 
 //вывод на lcd-экран и в монитор порта название точки доступа, к которой удалось подключиться и ip-адреса
-void lcd_v()  
+void lcd_v()  //1 стр. (часть информации)
 {
   Serial.println();
   Serial.print("WiFi SSID:");
@@ -119,11 +120,6 @@ void lcd_v()
       oled.print("SSID: "); oled.println(mySSID);
       oled.print("IP: ");   oled.println(myIP);
       oled.print("Mode: "); oled.print(myAP);
-      delay(5250);
-      oled.clear();
-      oled64.init();
-      oled64.drawBitmap(0, 0, img_bitmap, 128, 64, BITMAP_NORMAL, BUF_ADD);
-      delay(5250);
       break;
     }
     case 1: 
@@ -136,22 +132,63 @@ void lcd_v()
       lcd.setCursor(0,1); lcd.print("RSSI:");
       lcd.setCursor(6,1); lcd.print((int)(WiFi.RSSI()));
       lcd.setCursor(10,1); lcd.print("dBm");
-      delay(3500);
-      lcd.clear();
-      lcd.setCursor(0,0); lcd.print("Mode:");
-      lcd.setCursor(6,0); lcd.print(myAP);
-      lcd.setCursor(0,1); lcd.print(myIP);
-      delay(3500);
-      lcd.clear();
-      lcd.setCursor(0,0); lcd.print("SSID:");
-      lcd.setCursor(0,1); lcd.print(mySSID);
-      delay(3500);
       break;
     }
     default:
     {
-      Serial.println("Display definition error (server)");
+      Serial.println("Display definition error (wifi lcd_v)");
       break;
     }
   }
 }
+
+void lcd_v2()  //2 стр. (часть информации)
+{
+  switch (typeDevice) {
+    case 0: // OLED
+    {
+      oled.clear();
+      oled64.init();
+      oled64.drawBitmap(0, 0, img_bitmap, 128, 64, BITMAP_NORMAL, BUF_ADD);
+      break;
+    }
+    case 1: 
+    case 2: // LCD 
+    {
+      lcd.clear();
+      lcd.setCursor(0,0); lcd.print("Mode:");
+      lcd.setCursor(6,0); lcd.print(myAP);
+      lcd.setCursor(0,1); lcd.print(myIP);
+      break;
+    }
+    default:
+    {
+      Serial.println("Display definition error (wifi lcd_v2)");
+      break;
+    }
+  }
+}
+
+void lcd_v3() //3 стр. (часть информации)
+{
+  switch (typeDevice) {
+    case 0: // OLED
+    {
+      break;
+    }
+    case 1: 
+    case 2: // LCD 
+    {
+      lcd.clear();
+      lcd.setCursor(0,0); lcd.print("SSID:");
+      lcd.setCursor(0,1); lcd.print(mySSID);
+      break;
+    }
+    default:
+    {
+      Serial.println("Display definition error (wifi lcd_v3)");
+      break;
+    }
+  }
+}
+      

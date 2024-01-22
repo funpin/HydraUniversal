@@ -1,14 +1,14 @@
 //пакет json для передачи всей нужной информации в базу данных
 void sendJsonToDB()
 {
-              
+  
   String json;
   json  =  "{\"system\":{ ";
   //json += "\"Akey\":\"PBarK3_2\", ";
   //json += "\"Serial\":\"02\", ";
   json += "\"Akey\":\"" + String(Akey) + "\",";
   json += "\"Serial\":\"" + String(whoami) + "\", ";
-  json += "\"Version\":\"2024-01-11\", ";
+  json += "\"Version\":\"2024-01-22 (EXP)\", ";
   json += "\"RSSI\":\"" + String(WiFi.RSSI()) + "\",";
   json += "\"MAC\":\"" + String(WiFi.macAddress()) + "\",";
   json += "\"IP\":\""; json+= (String)myIP[0] + String(".") + (String)myIP[1] + String(".") +(String)myIP[2] + String(".") + (String)myIP[3]; json += "\"},";
