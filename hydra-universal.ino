@@ -71,51 +71,6 @@ const char* _password[wf_configs] ={};
 aREST rest = aREST();
 Adafruit_BME280 bme;                  // Датчик
 
-// Код буквы Ф для LCD экрана (1)
-PROGMEM uint8_t rus_F[] = {
-  0b00100,
-  0b01110,
-  0b10101,
-  0b10101,
-  0b10101,
-  0b01110,
-  0b00100,
-  0b00000
-};
-// Код буквы Д для LCD экрана (2)
-PROGMEM uint8_t rus_D[] = {
-  0b00110,
-  0b01010,
-  0b01010,
-  0b01010,
-  0b01010,
-  0b01010,
-  0b11111,
-  0b10001
-};
-// Код буквы Г для LCD экрана (3)
-PROGMEM uint8_t rus_G[] = {
-  0b11111,
-  0b10000,
-  0b10000,
-  0b10000,
-  0b10000,
-  0b10000,
-  0b10000,
-  0b00000
-};
-// Код буквы У для LCD экрана (4)
-PROGMEM uint8_t rus_U[] = {
-  0b10001,
-  0b10001,
-  0b10001,
-  0b01111,
-  0b00001,
-  0b10001,
-  0b01110,
-  0b00000
-};
-
 // Код изображения для OLED экрана
 static const PROGMEM uint8_t img_bitmap[] = {
   0x00, 0x00, 0x00, 0x00, 0xff, 0x7f, 0x7f, 0x66, 0x86, 0x84, 0x26, 0x26, 0x26, 0x23, 0x03, 0x13, 
@@ -456,34 +411,6 @@ void setup()
   dispayShowType = 0;
   ReinitWiFi(0);
   delay(500);
-  
-  switch (typeDevice) {
-    case 0: // OLED
-    {
-      break;
-    }
-    case 1: // 
-    case 2: // LCD 
-    {
-      lcd.createChar(1, rus_F);
-      lcd.createChar(2, rus_D);
-      lcd.createChar(3, rus_G);
-      lcd.createChar(4, rus_U);
-      lcd.clear();
-      lcd.setCursor(0,0);
-      // КАФЕДРА К3 МФ МГТУ
-      lcd.print("   KA"); lcd.print(char(1)); lcd.print("E"); lcd.print(char(2)); lcd.print("PA K3");
-      lcd.setCursor(0,1);
-      lcd.print("     M"); lcd.print(char(1)); lcd.print("M"); lcd.print(char(3)); lcd.print("T"); lcd.print(char(4));
-      break;
-    }
-    default:
-    {
-      Serial.println("Display definition error (main setup)");
-      break;
-    }
-  }
-  delay(3000);
 }
 
 void loop() 
